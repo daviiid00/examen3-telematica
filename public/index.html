@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telematics Cloud Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Importando fuentes de Google (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Iconos de Phosphor Icons para un diseño moderno -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <!-- Efecto de fondo (burbujas animadas) -->
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Cabecera del Dashboard -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="ph ph-cloud-network"></i>
+                    <h1>Telematics OS</h1>
+                </div>
+                <div class="server-status">
+                    <span class="status-indicator"></span>
+                    <span id="status-text">Conectando...</span>
+                </div>
+            </div>
+            <p class="subtitle">Cloud Infrastructure Monitor</p>
+        </header>
+
+        <!-- Contenedor principal de métricas -->
+        <main class="metrics-grid">
+            
+            <!-- Tarjeta: Uso de CPU -->
+            <div class="metric-card">
+                <div class="card-header">
+                    <i class="ph ph-cpu"></i>
+                    <h2>CPU Usage</h2>
+                </div>
+                <div class="card-body">
+                    <div class="value" id="cpu-val">--%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="cpu-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Uso de RAM -->
+            <div class="metric-card">
+                <div class="card-header">
+                    <i class="ph ph-memory"></i>
+                    <h2>RAM Usage</h2>
+                </div>
+                <div class="card-body">
+                    <div class="value" id="ram-val">--%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="ram-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Tráfico de Red -->
+            <div class="metric-card">
+                <div class="card-header">
+                    <i class="ph ph-activity"></i>
+                    <h2>Network Traffic</h2>
+                </div>
+                <div class="card-body">
+                    <div class="value" id="net-val">-- Mbps</div>
+                    <div class="pulse-graph">
+                        <div class="pulse-bar" style="height: 40%"></div>
+                        <div class="pulse-bar" style="height: 60%"></div>
+                        <div class="pulse-bar" style="height: 30%"></div>
+                        <div class="pulse-bar" style="height: 80%"></div>
+                        <div class="pulse-bar" style="height: 50%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Conexiones Activas -->
+            <div class="metric-card">
+                <div class="card-header">
+                    <i class="ph ph-users-three"></i>
+                    <h2>Active Conns</h2>
+                </div>
+                <div class="card-body">
+                    <div class="value highlight" id="conn-val">--</div>
+                    <p class="sub-text">Usuarios conectados al sistema</p>
+                </div>
+            </div>
+            
+            <!-- Tarjeta: Uptime (Tiempo en línea) -->
+            <div class="metric-card wide-card">
+                <div class="card-header">
+                    <i class="ph ph-clock"></i>
+                    <h2>System Uptime</h2>
+                </div>
+                <div class="card-body">
+                    <div class="value uptime-value" id="uptime-val">00h 00m 00s</div>
+                    <p class="sub-text" id="last-update">Última actualización: --</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>Examen Final Telemática - Creado con Node.js & Docker</p>
+        </footer>
+    </div>
+
+    <!-- Script principal -->
+    <script src="js/app.js"></script>
+</body>
+</html>

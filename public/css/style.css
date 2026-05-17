@@ -1,0 +1,276 @@
+/* 
+   Estilos principales del Dashboard. 
+   Tema Oscuro con efectos de Glassmorfismo y Animaciones Suaves.
+*/
+
+:root {
+    --bg-dark: #0f111a;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    
+    /* Colores vibrantes para los acentos */
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-green: #10b981;
+    
+    /* Variables de Glassmorfismo */
+    --glass-bg: rgba(30, 41, 59, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Efectos de fondo dinámicos */
+.background-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 10s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--accent-purple);
+    top: -100px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--accent-blue);
+    bottom: -50px;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* Contenedor principal */
+.dashboard-container {
+    width: 90%;
+    max-width: 1000px;
+    padding: 2rem;
+    z-index: 1;
+}
+
+/* Cabecera */
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: var(--accent-blue);
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    font-size: 1rem;
+}
+
+/* Estado del servidor (Animación de pulso verde) */
+.server-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-green);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+#status-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent-green);
+}
+
+/* Grid de métricas */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Tarjetas (Glassmorfismo) */
+.metric-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.wide-card {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}
+
+.card-header i {
+    font-size: 1.25rem;
+    color: var(--accent-purple);
+}
+
+.card-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.card-body .value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.card-body .highlight {
+    color: var(--accent-blue);
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.sub-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Barras de progreso */
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gráfico de barras animado para la red */
+.pulse-graph {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.pulse-bar {
+    width: 15%;
+    background-color: var(--accent-blue);
+    border-radius: 2px;
+    animation: bar-pulse 1.5s infinite alternate ease-in-out;
+}
+
+.pulse-bar:nth-child(2) { animation-delay: 0.2s; background-color: var(--accent-purple);}
+.pulse-bar:nth-child(3) { animation-delay: 0.4s; }
+.pulse-bar:nth-child(4) { animation-delay: 0.6s; background-color: var(--accent-purple);}
+.pulse-bar:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes bar-pulse {
+    0% { height: 20%; }
+    100% { height: 100%; }
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
