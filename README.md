@@ -1,110 +1,96 @@
-# Telematics Cloud Dashboard
+# 💻 Examen 3: Dashboard de Telemática
 
-**Examen 3 - Proyecto Final de Telemática**
+> 🌐 **Link en vivo (AWS):** [http://98.83.134.99/](http://98.83.134.99/)
 
-Este proyecto es un "Dashboard de Monitoreo en la Nube" que simula el estado de un servidor y de la red. Ha sido construido utilizando **Node.js y Express**, siguiendo una arquitectura sencilla, y diseñado para ser desplegado en un entorno de producción utilizando **Docker**.
+¡Hola! Este es mi proyecto final para el examen 3 de la materia de Telemática. 
 
-## 🚀 Características
-- **Servidor Web**: Node.js + Express que expone los archivos estáticos y una API RESTful.
-- **API Simulación**: Endpoint `/api/metrics` que simula carga de CPU, RAM, tráfico de red y uptime en tiempo real.
-- **Frontend Premium**: Interfaz HTML/CSS/JS pura, que utiliza diseño moderno (Glassmorphism), animaciones CSS y actualizaciones en tiempo real (Polling).
-- **Containerización**: Empaquetado totalmente en Docker usando un solo contenedor ligero (basado en `node:18-alpine`).
+Básicamente, construí un "Dashboard en la Nube" que sirve para monitorear cómo está funcionando un servidor (uso de CPU, RAM, qué tanta red está consumiendo, etc.). La idea de este proyecto es demostrar lo que aprendimos en clase sobre servidores, redes y contenedores.
 
----
-
-## 🛠️ Requisitos Previos
-
-Antes de ejecutar este proyecto, asegúrate de tener instalado:
-- [Docker](https://docs.docker.com/get-docker/) (Para ejecución en contenedor)
-- [Node.js](https://nodejs.org/) (Opcional, si deseas correrlo de forma local sin Docker)
+## 🚀 ¿Qué hace este proyecto?
+- **Tiene un Servidor Web**: Lo armé usando Node.js y Express. Este servidor se encarga de mostrar la página web y enviar los datos.
+- **Simula Datos**: Creé una ruta (`/api/metrics`) que genera datos dinámicos para simular que un servidor real está trabajando y consumiendo recursos.
+- **Se ve genial**: El diseño del frontend lo hice a mano con HTML, CSS y un poquito de JavaScript, usando un estilo moderno tipo "cristal" (Glassmorphism) para que se vea bien presentado.
+- **Usa Docker**: Todo el proyecto está empaquetado en un contenedor de Docker para que sea súper fácil de correr en cualquier lado, especialmente en la nube de AWS.
 
 ---
 
-## 💻 Instrucciones de Instalación y Ejecución Local
+## 🛠️ Lo que necesitas para correrlo
 
-### Opción 1: Ejecutar con Docker (Recomendado para el Examen)
+Si quieres probarlo en tu compu antes de subirlo a la nube, necesitas:
+- Tener **Docker** instalado.
+- (Opcional) Tener **Node.js** si prefieres correrlo sin Docker.
 
-1. **Construir la imagen de Docker**:
-   Sitúate en la raíz del proyecto (donde está el `Dockerfile`) y ejecuta:
+---
+
+## 💻 Pasos para probarlo en tu compu (Local)
+
+### Opción 1: Con Docker (La mejor forma)
+
+1. Abre tu terminal en la carpeta del proyecto y construye la imagen:
    ```bash
    docker build -t telematics-dashboard .
    ```
 
-2. **Ejecutar el contenedor**:
-   Una vez construida la imagen, despliega el servicio exponiendo el puerto `8080` (o el puerto `80` si lo prefieres):
+2. Prende el contenedor:
    ```bash
    docker run -d -p 8080:8080 --name telematics-app telematics-dashboard
    ```
-   > Nota: El parámetro `-d` ejecuta el contenedor en segundo plano (detached mode).
 
-3. **Verificar**:
-   Abre tu navegador web e ingresa a: `http://localhost:8080`
+3. Ve a tu navegador y entra a: `http://localhost:8080`
 
-### Opción 2: Ejecutar con Node.js Local (Modo Desarrollo)
+### Opción 2: A la antigua (Solo con Node.js)
 
-1. Instalar dependencias:
+1. Instala las librerías:
    ```bash
    npm install
    ```
-2. Ejecutar el servidor web:
+2. Corre el servidor:
    ```bash
    npm start
    ```
-3. Acceder en el navegador: `http://localhost:8080`
+3. Entra a: `http://localhost:8080`
 
 ---
 
-## ☁️ Despliegue en AWS EC2 (Ubuntu)
+## ☁️ Pasos para subirlo a AWS (El Examen)
 
-Para llevar este servicio a nivel de producción en la nube (AWS), sigue estos pasos desde una instancia EC2 con Ubuntu:
+Así es como subí este proyecto a una máquina real en la nube de AWS EC2 (con Ubuntu):
 
-1. **Conectarse a la Instancia EC2** vía SSH:
+1. **Me conecté al servidor** desde mi terminal usando mi llave `.pem`:
    ```bash
-   ssh -i "tu-llave.pem" ubuntu@IP_DE_TU_INSTANCIA
+   ssh -i "mi-llave.pem" ubuntu@IP_DE_AWS
    ```
 
-2. **Instalar Docker en Ubuntu**:
+2. **Instalé Docker** en la máquina de Ubuntu:
    ```bash
    sudo apt update
    sudo apt install docker.io -y
-   sudo systemctl start docker
-   sudo systemctl enable docker
    ```
-   *(Opcional: agrega tu usuario al grupo de docker para no usar `sudo` siempre: `sudo usermod -aG docker ubuntu`)*
 
-3. **Clonar el Repositorio de GitHub**:
+3. **Descargué mi código** desde este repositorio de GitHub:
    ```bash
-   git clone <URL_DE_TU_REPOSITORIO_GITHUB>
-   cd <NOMBRE_DEL_REPOSITORIO>
+   git clone https://github.com/daviiid00/examen3-telematica.git
+   cd examen3-telematica
    ```
 
-4. **Construir la Imagen Docker en AWS**:
+4. **Construí la imagen** de Docker ahí mismo en AWS (¡sin olvidar el punto al final!):
    ```bash
    sudo docker build -t telematics-dashboard .
    ```
 
-5. **Ejecutar el Contenedor en Producción**:
-   Vamos a enlazar el puerto `80` del servidor EC2 con el puerto `8080` del contenedor para que sea accesible públicamente a través de HTTP:
+5. **¡A correr!** Prendí el contenedor pero esta vez conectándolo al puerto 80 para que cualquiera en internet pueda verlo sin poner puertos raros:
    ```bash
    sudo docker run -d -p 80:8080 --name prod-telematics telematics-dashboard
    ```
 
-6. **Configurar el Security Group en AWS**:
-   Asegúrate de ir a la consola de AWS EC2 y editar el **Security Group** asociado a tu instancia. Debes agregar una regla de entrada (Inbound Rule) permitiendo el tráfico **HTTP (Puerto 80)** desde cualquier origen (`0.0.0.0/0`).
-
-7. **Acceso Final**:
-   Ingresa la Dirección IP Pública de tu instancia EC2 en el navegador. Ejemplo: `http://IP_PUBLICA_EC2`
+*(Nota mental: hay que ir a la consola de AWS y abrir el puerto 80 en el Grupo de Seguridad (Inbound Rules) para que esto funcione).*
 
 ---
 
-## 🏗️ Arquitectura de Archivos
-
-- `server.js`: El corazón de la aplicación backend y definición de la API de monitoreo.
-- `public/`: Directorio que contiene los estáticos de la página web (Frontend).
-  - `index.html`: La estructura semántica del dashboard.
-  - `css/style.css`: Hojas de estilo modernas y responsive.
-  - `js/app.js`: Script que consulta la API cíclicamente para dar vida al UI.
-- `Dockerfile` & `.dockerignore`: Archivos de configuración para construir el contenedor de forma limpia y escalable.
+## 📁 Archivos Principales
+- `server.js`: Aquí está la lógica del backend y la API.
+- `public/`: Aquí están los estilos (`.css`), la estructura (`.html`) y el script visual (`.js`).
+- `Dockerfile`: Las instrucciones para que Docker empaquete la app.
 
 ## ✒️ Autor
-Edgar - Examen 3 de Telemática.
+Edgardo David Anaya Negrete - Examen 3 de Telemática.
